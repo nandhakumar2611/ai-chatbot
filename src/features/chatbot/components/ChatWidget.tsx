@@ -3,6 +3,7 @@ import ChatWindow from "./ChatWindow";
 import { Button } from "@/components/ui/button";
 import type { ChatState, Message } from "../types/chat";
 import { MessageCircle } from "lucide-react";
+import axios from "axios";
 
 const ChatWidget = () => {
   const [chatState, setChatState] = useState<ChatState>({
@@ -11,20 +12,10 @@ const ChatWidget = () => {
     isTyping: false,
   });
 
-  const generateResponse = useCallback((userMessage: string): string => {
-    const message = userMessage.toLowerCase();
-
-    if (message.includes("insat")) {
-      return "INSAT is India's meteorological satellite system.";
-    } else if (message.includes("rainfall")) {
-      return "In June 2023, Kerala received 128.3mm of rainfall.";
-    } else {
-      return "I'm checking that for you...";
-    }
-  }, []);
+  const [sessionId, setSessionId] = useState<string>("");
 
   const handleSendMessage = useCallback(
-    (text: string) => {
+    async (text: string) => {
       const userMessage: Message = {
         id: Date.now().toString(),
         text,
@@ -38,11 +29,20 @@ const ChatWidget = () => {
         isTyping: true,
       }));
 
-      // Simulate bot response with delay
-      setTimeout(() => {
+     try {
+        const response = await axios.post(`${import.meta.env.VITE_CHAT_API_BASE_URL}/chat`, {
+          session_id: sessionId, // ✅ send current session_id
+          message: text,
+        });
+
+        // ✅ Save new session_id from response if updated
+        if (response.data.session_id && sessionId !== response.data.session_id) {
+          setSessionId(response.data.session_id);
+        }
+
         const botResponse: Message = {
           id: (Date.now() + 1).toString(),
-          text: generateResponse(text),
+          text: response.data.message ?? "Sorry, I didn't get that.",
           sender: "bot",
           timestamp: new Date(),
         };
@@ -52,9 +52,22 @@ const ChatWidget = () => {
           messages: [...prev.messages, botResponse],
           isTyping: false,
         }));
-      }, 1000);
+      } catch (error) {
+        const errorMessage: Message = {
+          id: (Date.now() + 2).toString(),
+          text: "❗ An error occurred. Please try again later.",
+          sender: "bot",
+          timestamp: new Date(),
+        };
+
+        setChatState((prev) => ({
+          ...prev,
+          messages: [...prev.messages, errorMessage],
+          isTyping: false,
+        }));
+      }
     },
-    [generateResponse]
+    [sessionId]
   );
 
   const toggleChat = () => {

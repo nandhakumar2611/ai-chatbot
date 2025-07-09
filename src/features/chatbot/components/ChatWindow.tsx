@@ -47,7 +47,7 @@ const ChatWindow = ({
   if (!isOpen) return null;
   return (
     <div className="fixed bottom-20 right-4 w-96 max-w-[calc(100vw-2rem)] h-[500px] z-50 animate-in slide-in-from-bottom-2 duration-300">
-      <Card className="h-full flex flex-col shadow-2xl border-0 bg-white">
+      <Card className="h-full flex flex-col shadow-2xl border-0 bg-white pt-0">
         <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg p-4">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg font-semibold flex items-center gap-2">
@@ -65,7 +65,7 @@ const ChatWindow = ({
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 p-0 flex flex-col">
+        <CardContent className="flex-1 p-0 flex flex-col min-h-0">
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
             {messages.length === 0 && (
               <div className="text-center text-gray-500 py-8">
@@ -82,7 +82,7 @@ const ChatWindow = ({
                 }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                  className={`max-w-[80%] rounded-lg px-4 py-2 flex flex-col ${
                     message.sender === "user"
                       ? "bg-blue-600 text-white"
                       : "bg-white text-gray-800 border border-gray-200"
@@ -95,21 +95,24 @@ const ChatWindow = ({
                     {message.sender === "user" && (
                       <User className="w-4 h-4 mt-1 text-white flex-shrink-0" />
                     )}
-                    <div>
-                      <p className="text-sm">{message.text}</p>
-                      <p
-                        className={`text-xs mt-1 ${
-                          message.sender === "user"
-                            ? "text-blue-100"
-                            : "text-gray-500"
-                        }`}
-                      >
-                        {message.timestamp.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </p>
-                    </div>
+                    <p className="text-sm text-justify">{message.text}</p>{" "}
+                    {/* ✅ Justified */}
+                  </div>
+
+                  {/* ✅ Timestamp aligned bottom-right */}
+                  <div className="text-xs text-right mt-1">
+                    <span
+                      className={`${
+                        message.sender === "user"
+                          ? "text-blue-100"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {message.timestamp.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
                   </div>
                 </div>
               </div>
