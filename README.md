@@ -1,69 +1,48 @@
-# React + TypeScript + Vite
+# 🛰️ Nexa Help Bot – AI Chatbot Interface for Satellite Data Portals
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A floating chat widget built with **React**, **TypeScript**, and **shadcn/ui**, designed for quick information retrieval from portals like [MOSDAC](https://www.mosdac.gov.in).  
+> This project is crafted with modularity in mind – perfect for hackathons, data portals, or any knowledge-driven web app!
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Demo
 
-## Expanding the ESLint configuration
+<img src="https://user-images.githubusercontent.com/your-image-link" alt="Chatbot UI Preview" width="600" />
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+| Layer        | Tools / Frameworks              |
+|--------------|----------------------------------|
+| Frontend     | React + TypeScript              |
+| UI Library   | shadcn/ui + TailwindCSS         |
+| State Mgmt   | React Hooks                     |
+| Styling      | TailwindCSS                     |
+| API Handling | Mock (via `setTimeout`)         |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ✨ Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- 🔘 Floating chatbot launcher (bottom-right)
+- 💬 Responsive chat window with user + bot messages
+- ⚡ Instant fake replies based on keywords (e.g., `INSAT`, `rainfall`)
+- ♻️ Modular components: `ChatWidget`, `ChatWindow`
+- 🧠 Easy plug-in for LLM, RAG, or external API
+- 🎨 Styled using shadcn components and Tailwind
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🧪 Local Setup
+
+```bash
+# Clone the repo
+git clone https://github.com/your-username/nexa-chatbot.git
+cd nexa-chatbot
+
+# Install dependencies
+npm install
+
+# Run the dev server
+npm run dev
